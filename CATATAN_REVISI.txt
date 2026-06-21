@@ -1,0 +1,51 @@
+CATATAN REVISI PROJECT SRRK MVC PHP
+
+1. Hak akses reservasi
+- Admin tidak bisa lagi membuka form pengajuan reservasi.
+- Admin tidak bisa lagi membuka halaman Reservasi Saya.
+- Admin tidak bisa lagi membatalkan reservasi melalui flow pengguna.
+- Role yang bisa mengajukan reservasi hanya dosen dan mahasiswa.
+- Reservasi baru dari dosen dan mahasiswa selalu berstatus pending.
+- Admin tetap bisa verifikasi, setujui, tolak, melihat riwayat, mengelola ruangan, mengelola akun, dan melihat laporan.
+
+2. Tampilan
+- Desain CSS dan struktur view tidak dirombak.
+- Sidebar admin hanya dikurangi menu Ajukan Reservasi dan Reservasi Saya.
+- Form reservasi hanya dihapus alert khusus admin.
+
+3. Database
+- Koneksi database dipindahkan dari mysqli MySQL ke PDO agar kompatibel dengan PostgreSQL Neon.
+- Config mendukung DATABASE_URL dari Neon.
+- Config juga masih bisa diarahkan ke MySQL lokal jika diperlukan.
+- SQL PostgreSQL tersedia di sql/db_reservasi_ruangan_postgresql.sql.
+- SQL utama sql/db_reservasi_ruangan.sql sekarang memakai PostgreSQL.
+- SQL MySQL lama disimpan sebagai sql/db_reservasi_ruangan_mysql_legacy.sql.
+
+4. Vercel
+- Ditambahkan api/index.php sebagai entry point Vercel.
+- Ditambahkan vercel.json untuk runtime vercel-php.
+- Ditambahkan .env.example untuk contoh environment variable.
+
+5. Validasi
+- Semua file PHP sudah dicek dengan php -l dan tidak ada syntax error.
+
+6. Perbaikan Vercel static asset
+- Folder assets asli tetap dipertahankan untuk local.
+- Folder public/assets ditambahkan agar CSS dan JS terbaca di Vercel.
+- Link CSS dan JS diubah lewat helper assetUrl() supaya aman di local, subfolder XAMPP, dan Vercel.
+- Link file upload diubah lewat uploadUrl() supaya path tetap konsisten.
+- File .env asli tidak boleh berisi password produksi saat di-push ke GitHub.
+
+
+REVISI UPLOAD DOKUMEN VERCEL
+- Upload dokumen pendukung tidak lagi mengandalkan folder uploads saat berjalan di Vercel.
+- File PDF/JPG/PNG disimpan ke database PostgreSQL/Neon pada kolom document_data (BYTEA).
+- Ditambahkan route document.php?id=... untuk membuka file dengan kontrol akses admin/pemilik reservasi.
+- Ditambahkan migration sql/migration_upload_document_neon.sql untuk database Neon yang sudah terlanjur dibuat.
+- Batas upload default 3 MB agar aman di Vercel Function.
+
+
+REVISI 21 Juni 2026 - FIX UPLOAD BYTEA
+- Memperbaiki error PostgreSQL invalid byte sequence 0x89 saat upload PNG/PDF/JPG.
+- Parameter document_data sekarang dibind sebagai PDO::PARAM_LOB, bukan string UTF-8.
+- File pendukung tetap disimpan ke kolom document_data BYTEA agar aman di Vercel.
