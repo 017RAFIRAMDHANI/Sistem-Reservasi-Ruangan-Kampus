@@ -3,7 +3,7 @@ class ReservationModel extends BaseModel
 {
     private function reservationColumns(string $alias = 'r'): string
     {
-        return "{$alias}.id, {$alias}.user_id, {$alias}.room_id, {$alias}.title, {$alias}.purpose, {$alias}.reservation_date, {$alias}.start_time, {$alias}.end_time, {$alias}.participants, {$alias}.document, {$alias}.status, {$alias}.admin_note, {$alias}.created_at, {$alias}.updated_at";
+        return "{$alias}.id, {$alias}.user_id, {$alias}.room_id, {$alias}.title, {$alias}.purpose, {$alias}.reservation_date, {$alias}.start_time, {$alias}.end_time, {$alias}.participants, {$alias}.document, {$alias}.status, {$alias}.admin_note, {$alias}.created_at";
     }
 
     public function recentForAdmin(int $limit = 8)
