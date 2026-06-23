@@ -3,7 +3,7 @@ class OptionModel extends BaseModel
 {
     public function roles(): array
     {
-        $result = $this->db->query('SELECT id, name, label FROM roles ORDER BY id ASC');
+        $result = $this->db->query('SELECT id, name FROM roles ORDER BY id ASC');
         return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
     }
 
