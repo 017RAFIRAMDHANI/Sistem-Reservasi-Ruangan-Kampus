@@ -3,25 +3,12 @@ class RoomModel extends BaseModel
 {
     public function allWithBuilding()
     {
-        return $this->db->query("
-        SELECT
-            rm.id,
-            rm.building_id,
-            rm.name,
-            rm.floor,
-            rm.capacity,
-            rm.status,
-            rm.description,
-            rm.created_at,
-            b.name AS building_name,
-            b.address,
+        return $this->db->query("SELECT rm.*, b.name AS building_name, b.address,
             CONCAT(b.name, ' - ', rm.floor) AS location_label
-        FROM rooms rm
-        JOIN buildings b ON b.id = rm.building_id
-        ORDER BY rm.id DESC
-    ");
+            FROM rooms rm
+            JOIN buildings b ON b.id = rm.building_id
+            ORDER BY rm.id DESC");
     }
-
 
     public function activeWithBuilding()
     {
