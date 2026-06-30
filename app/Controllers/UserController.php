@@ -15,10 +15,10 @@ class UserController extends Controller
 
         $userModel = new UserModel();
         $pageTitle = 'Form Pengguna';
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
         $roles = getRoleOptions();
         $departments = getDepartmentOptions();
-        $data = [
+        $userData = [
             'name' => '',
             'email' => '',
             'role_id' => 3,
@@ -28,17 +28,17 @@ class UserController extends Controller
         ];
 
         if ($id > 0) {
-            $data = $userModel->find($id) ?: $data;
+            $userData = $userModel->find($id) ?: $userData;
         }
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $form = [
                 'name' => trim($_POST['name'] ?? ''),
                 'email' => trim($_POST['email'] ?? ''),
-                'role_id' => (int)($_POST['role_id'] ?? 0),
+                'role_id' => (int) ($_POST['role_id'] ?? 0),
                 'phone' => trim($_POST['phone'] ?? ''),
                 'nim_nidn' => trim($_POST['nim_nidn'] ?? ''),
-                'department_id' => (int)($_POST['department_id'] ?? 0),
+                'department_id' => (int) ($_POST['department_id'] ?? 0),
             ];
             $password = $_POST['password'] ?? '';
 
@@ -65,17 +65,17 @@ class UserController extends Controller
             redirect('users.php');
         }
 
-        $this->view('users/form', compact('pageTitle', 'id', 'roles', 'departments', 'data'));
+        $this->view('users/form', compact('pageTitle', 'id', 'roles', 'departments', 'userData'));
     }
 
     public function delete(): void
     {
         requireRole(['admin']);
 
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = isset($_GET['id']) ? (int) $_GET['id'] : 0;
         $current = currentUser();
 
-        if ($id > 0 && $id !== (int)$current['id']) {
+        if ($id > 0 && $id !== (int) $current['id']) {
             (new UserModel())->delete($id);
             setFlash('success', 'Akun berhasil dihapus.');
         } else {
