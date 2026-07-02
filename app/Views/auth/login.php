@@ -29,12 +29,12 @@
             <button type="submit">Login</button>
         </form>
 
-        <div class="card mt-4 mb-0">
+        <!-- <div class="card mt-4 mb-0">
             <strong>Akun demo</strong>
             <div class="small-text mt-2">Admin: admin@example.com / admin123</div>
             <div class="small-text">Dosen: dosen@example.com / dosen123</div>
             <div class="small-text">Mahasiswa: mahasiswa@example.com / mahasiswa123</div>
-        </div>
+        </div> -->
     </div>
 </div>
 </body>

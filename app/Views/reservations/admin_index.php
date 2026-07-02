@@ -33,7 +33,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php $no = 1; while ($row = $result->fetch_assoc()): ?>
+                <?php $no = 1;
+                while ($row = $result->fetch_assoc()): ?>
                     <tr>
                         <td><?= $no++; ?></td>
                         <td><?= e($row['user_name']); ?></td>
@@ -48,7 +49,8 @@
                         </td>
                         <td>
                             <?= e(date('d-m-Y', strtotime($row['reservation_date']))); ?><br>
-                            <span class="small-text"><?= e(substr($row['start_time'], 0, 5)); ?> - <?= e(substr($row['end_time'], 0, 5)); ?></span>
+                            <span class="small-text"><?= e(substr($row['start_time'], 0, 5)); ?> -
+                                <?= e(substr($row['end_time'], 0, 5)); ?></span>
                         </td>
                         <td>
                             <?php if ($row['document']): ?>
@@ -57,7 +59,9 @@
                                 <span class="small-text">Tidak ada</span>
                             <?php endif; ?>
                         </td>
-                        <td><span class="<?= e(statusBadgeClass($row['status'])); ?>"><?= e(statusLabel($row['status'])); ?></span></td>
+                        <td><span
+                                class="<?= e(statusBadgeClass($row['status'])); ?>"><?= e(statusLabel($row['status'])); ?></span>
+                        </td>
                         <td><?= e($row['admin_note'] ?: '-'); ?></td>
                         <td>
                             <?php if (in_array($row['status'], ['pending', 'verified'], true)): ?>
@@ -68,10 +72,21 @@
                                     </div>
                                     <div class="actions">
                                         <?php if ($row['status'] === 'pending'): ?>
-                                            <button class="btn info" type="submit" name="action" value="verify">Verifikasi</button>
+                                            <button class="btn info" type="submit" name="action" value="verify"
+                                                data-confirm="Yakin ingin memverifikasi reservasi ini?">
+                                                Verifikasi
+                                            </button>
                                         <?php endif; ?>
-                                        <button class="btn success" type="submit" name="action" value="approve">Setujui</button>
-                                        <button class="btn danger" type="submit" name="action" value="reject">Tolak</button>
+
+                                        <button class="btn success" type="submit" name="action" value="approve"
+                                            data-confirm="Yakin ingin menyetujui reservasi ini?">
+                                            Setujui
+                                        </button>
+
+                                        <button class="btn danger" type="submit" name="action" value="reject"
+                                            data-confirm="Yakin ingin menolak reservasi ini?">
+                                            Tolak
+                                        </button>
                                     </div>
                                 </form>
                             <?php else: ?>
